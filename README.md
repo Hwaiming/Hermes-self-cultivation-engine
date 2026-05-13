@@ -59,6 +59,11 @@ It's a reusable framework extracted from 42 real evolution cycles of an AI agent
 │  engine/bridge/                  # SCALE Engine interop  │
 │  └── scale-bridge.py             # SCALE-compatible CLI  │
 │                                                         │
+│  engine/memory/                 # Memory system (retain/recall/reflect)│
+│  ├── core.py                    # Unified MemoryEngine interface       │
+│  ├── store.py                   # SQLite + FTS5 backend               │
+│  └── narrative.py               # Append-only JSONL narrative log     │
+│                                                         │
 │  engine/check.py                 # CLI: run + verify     │
 │  engine/scripts/                 # Automation            │
 │  └── ...                                               │
