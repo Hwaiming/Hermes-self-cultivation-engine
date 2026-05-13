@@ -17,6 +17,7 @@ Thumbs.db
 
 # Engine runtime
 pending-patches/
+.scale/
 *.log
 
 # Secrets

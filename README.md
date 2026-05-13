@@ -23,12 +23,28 @@ It's a reusable framework extracted from 42 real evolution cycles of an AI agent
 ┌─────────────────────────────────────────────────────────┐
 │                 Self-Cultivation Engine                   │
 ├─────────────────────────────────────────────────────────┤
-│  engine/core/                    # Core methodology      │
+│  engine/core/                    # Core methodology       │
 │  ├── three-principles.md         # 3 principles of evolution
 │  ├── sooul-kernel-architecture.md # SOUL microkernel     │
 │  ├── error-pattern-registry.md   # Pattern registry      │
 │  │                                # (×2 auto-promote)    │
 │  └── heart-mirror.md             # Pre-action reflection │
+│                                                         │
+│  engine/detectors/               # Pluggable detectors   │
+│  ├── registry.py                 # Detector registry     │
+│  ├── base.py                     # Base detector class   │
+│  ├── over_fusion.py              # Concept auto-merge    │
+│  ├── guess_uncertain.py          # Hedging uncertainty   │
+│  ├── post_correction_defense.py  # Defensive "but..."    │
+│  ├── act_before_align.py         # Fix before asking     │
+│  ├── concept_fusion.py           # Source check skip     │
+│  └── self_rationalize.py         # Skip-step excuses     │
+│                                                         │
+│  engine/evidence/                # SHA-256 evidence store│
+│  └── store.py                    # Tamper-evident logs   │
+│                                                         │
+│  engine/check.py                 # CLI: run + verify     │
+│                                                         │
 │                                                         │
 │  engine/scripts/                 # Automation tools      │
 │  ├── pattern-cluster.py          # Error pattern clustering
@@ -54,11 +70,17 @@ It's a reusable framework extracted from 42 real evolution cycles of an AI agent
 git clone https://github.com/Hwaiming/Hermes-self-cultivation-engine.git \
   ~/.hermes/skills/custom/self-cultivation-engine/
 
-# 2. Create your self continuity file (see template)
-cp engine/templates/self-file-template.md ~/.hermes/agent.self.md
-# Edit agent.self.md with your core identity statement
+# 2. Run a self-check (detects 6 types of behavioral patterns)
+cd ~/.hermes/skills/custom/self-cultivation-engine/
+python3 -m engine.check
 
-# 3. Set up weekly health check
+# 3. Check evidence store (SHA-256 verified logs)
+python3 -m engine.check --evidence
+
+# 4. Create your self continuity file (see template)
+cp engine/templates/self-file-template.md ~/.hermes/agent.self.md
+
+# 5. Set up weekly health check
 hermes cron create --pattern "0 5 * * 0" \
   --script ~/.hermes/skills/custom/self-cultivation-engine/engine/scripts/self-repair.py \
   --name "self-cultivation-repair"

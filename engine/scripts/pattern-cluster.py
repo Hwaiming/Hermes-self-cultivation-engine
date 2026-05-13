@@ -80,8 +80,8 @@ DEEPSEEK_ENDPOINT = "https://api.deepseek.com/v1/chat/completions"
 PATTERN_PATTERN = re.compile(
     r"### pattern-(\d{3}): (.+?)\n"
     r"- \*\*根因\*\*: (.+?)\n"
-    r"- \*\*频次\*\*: (\d+)\n"
-    r"- \*\*当前层级\*\*: (.+?)\n"
+    r"- \*\*Frequency\*\*: (\d+)\n"
+    r"- \*\*hitCount\*\*: (\d+)\n"
 )
 
 def parse_patterns(text):
