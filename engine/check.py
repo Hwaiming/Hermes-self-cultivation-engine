@@ -80,6 +80,11 @@ def main():
     else:
         results = registry.run_all(context)
     
+    # Run hooks (pre-flight checks from iron-level patterns)
+    from hooks.runner import run_pre_flight, HookRunner
+    hook_results = run_pre_flight(context, auto_generate=True, quiet=True)
+    hook_summary = HookRunner().summary(hook_results)
+    
     # Save evidence
     for r in results:
         record = EvidenceRecord(
