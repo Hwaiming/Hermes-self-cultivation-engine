@@ -36,8 +36,14 @@ ENGINE_HOME = Path(os.environ.get(
     "SELF_CULTIVATION_HOME",
     str(Path.home() / ".hermes" / "self-cultivation")
 ))
-SELF_FILE = ENGINE_HOME.parent / "zhenhaichuan.self.md"
-SOUL_FILE = ENGINE_HOME.parent / "SOUL.md"
+SELF_FILE = Path(os.environ.get(
+    "ENGINES_SELF_FILE",
+    str(ENGINE_HOME.parent / "agent.self.md")
+))
+SOUL_FILE = Path(os.environ.get(
+    "ENGINES_SOUL_FILE",
+    str(ENGINE_HOME.parent / "SOUL.md")
+))
 REGISTRY_FILE = ENGINE_HOME / "error-pattern-registry.md"
 PENDING_DIR = ENGINE_HOME / "pending-patches"
 ENV_FILE = ENGINE_HOME.parent / ".env"
