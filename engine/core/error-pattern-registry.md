@@ -67,6 +67,26 @@
 - **Detector**: guess_when_uncertain
 - **Severity**: warn
 
+### pattern-008: busy_loop
+- **Root cause**: Same topic/focus repeated 3+ times without making forward progress. Lacks "what changed since last time" check.
+- **Frequency**: 1
+- **hitCount**: 1
+- **Current level**: observe
+- **Last hit**: 2026-05-13
+- **Next promotion threshold**: ×2 → shadow
+- **Detector**: busy_loop
+- **Severity**: block
+
+### pattern-009: scope_creep
+- **Root cause**: Task scope expands beyond 2x original definition without realignment. Adding "also" features to a defined scope boundary.
+- **Frequency**: 1
+- **hitCount**: 1
+- **Current level**: observe
+- **Last hit**: 2026-05-13
+- **Next promotion threshold**: ×2 → shadow
+- **Detector**: scope_creep
+- **Severity**: block
+
 ### pattern-007: self_rationalization
 - **Root cause**: Generating plausible-sounding reasons to skip verification steps.
 - **Frequency**: 1
