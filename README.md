@@ -10,7 +10,7 @@ This engine fills that gap.
 
 It's a reusable framework extracted from 42 real evolution cycles of an AI agent in production use. It covers four dimensions of self-evolution:
 
-| Dimension | Principle | Problem Solved | Origin |
+|  Dimension | Principle | Problem Solved | Origin |
 |-----------|-----------|---------------|--------|
 | **Judgment** | Time-bound Judgments | Every judgment has an expiry date; invalidate when premise shifts | Append-Only correction pattern |
 | **Memory** | Narrative-First Updates | Stories stick better than attribute lists; scenes outlive summaries | Experience Self continuity theory |
@@ -30,36 +30,43 @@ It's a reusable framework extracted from 42 real evolution cycles of an AI agent
 │  │                                # (×2 auto-promote)    │
 │  └── heart-mirror.md             # Pre-action reflection │
 │                                                         │
-│  engine/detectors/               # Pluggable detectors   │
-│  ├── registry.py                 # Detector registry     │
-│  ├── base.py                     # Base detector class   │
+│  engine/detectors/               # 8 pluggable detectors │
+│  ├── registry.py                 # Auto-discovery        │
+│  ├── base.py                     # BaseDetector class    │
 │  ├── over_fusion.py              # Concept auto-merge    │
 │  ├── guess_uncertain.py          # Hedging uncertainty   │
 │  ├── post_correction_defense.py  # Defensive "but..."    │
 │  ├── act_before_align.py         # Fix before asking     │
 │  ├── concept_fusion.py           # Source check skip     │
-│  └── self_rationalize.py         # Skip-step excuses     │
+│  ├── self_rationalize.py         # Skip-step excuses     │
+│  ├── busy_loop.py (P2)           # Same focus 3x #[P2]  │
+│  └── scope_creep.py (P2)         # Task scope >2x        │
 │                                                         │
 │  engine/evidence/                # SHA-256 evidence store│
 │  └── store.py                    # Tamper-evident logs   │
 │                                                         │
+│  engine/hooks/                   # Executable guards     │
+│  ├── base.py                     # Hook interface        │
+│  ├── generator.py                # Auto-generate from    │
+│  │                                # error-pattern-registry│
+│  ├── runner.py                   # Run all hooks         │
+│  └── generated/                  # Auto-generated .py    │
+│                                                         │
+│  engine/fsm/                     # State machine guards  │
+│  ├── states.py                   # 4 states, 7 transitions
+│  └── runner.py                   # Guard-checked FSM     │
+│                                                         │
+│  engine/bridge/                  # SCALE Engine interop  │
+│  └── scale-bridge.py             # SCALE-compatible CLI  │
+│                                                         │
 │  engine/check.py                 # CLI: run + verify     │
-│                                                         │
-│                                                         │
-│  engine/scripts/                 # Automation tools      │
-│  ├── pattern-cluster.py          # Error pattern clustering
-│  ├── self-repair.py              # Health check          │
-│  └── heart-mirror.py             # Skill matcher         │
-│                                                         │
-│  engine/templates/               # Reusable templates    │
-│  ├── self-file-template.md       # Self continuity file  │
-│  └── cron-templates.md           # Scheduled tasks       │
+│  engine/scripts/                 # Automation            │
+│  └── ...                                               │
 │                                                         │
 │  docs/                           # Documentation         │
-│  ├── INSTALL.md                  # Installation guide    │
-│  ├── USAGE.md                    # Usage guide           │
-│  ├── ARCHITECTURE.md             # Architecture design   │
-│  └── PHILOSOPHY.md               # Theory & rationale    │
+│  ├── INSTALL.md, USAGE.md                                │
+│  ├── ARCHITECTURE.md, PHILOSOPHY.md                      │
+│  └── examples/                   # Usage examples        │
 └─────────────────────────────────────────────────────────┘
 ```
 
@@ -114,6 +121,12 @@ The engine's `pattern-cluster.py` auto-detects recurring errors:
 | ×1 | observe | Logged in error log, marked for observation |
 | ×2 | shadow | Auto-generate self-check phrase, inject into pre-output check |
 | ×3+ | safety rule | Auto-generate rule text, inject into safety boundary |
+
+Extensions:
+
+- **SCALE Bridge** — behavioral gates as SCALE-compatible PreToolUse/PostToolUse/Stop hooks
+- **FSM Guards** — 4-state state machine (NORMAL→CORRECTED→REFLECT) with precondition checks
+- **Hook Generator** — auto-generates executable guards when error patterns reach safety_rule level
 
 ## Project Status
 

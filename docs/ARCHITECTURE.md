@@ -159,6 +159,54 @@ engine/fsm/
 
 Four states (NORMAL → CORRECTED → REFLECT → NORMAL + SELF_UPDATE) with 7 transitions, each guarded by precondition checks. Guards block transitions that skip required steps (e.g. leaving CORRECTED without updating error log).
 
+## SCALE Engine Bridge (P2)
+
+```
+engine/bridge/
+├── __init__.py
+└── scale-bridge.py    # SCALE-compatible CLI gate
+```
+
+Speaks [SCALE Engine](https://github.com/Hwaiming/scale-engine) hook protocol.
+SCALE's PreToolUse / PostToolUse / beforeStop hooks call this as an external command.
+
+| SCALE Hook | Bridge Command | What It Checks |
+|-----------|---------------|----------------|
+| PreToolUse | `scale-bridge.py pre-tool` | All detectors + hooks before action |
+| PostToolUse | `scale-bridge.py post-tool` | Post-action patterns (rationalization) |
+| beforeStop | `scale-bridge.py stop` | FSM state readiness + pending detectors |
+
+Returns SCALE-compatible output:
+```json
+{"decision":"block","reason":"...","suggestion":"...","injectContext":[...]}
+```
+
+Exit codes: 0=allow, 1=block(soft), 2=deny(hard).
+
+### Integration Architecture
+
+```
+┌──────────────────────────────────────────────────┐
+│           SCALE Engine (Node.js)                 │
+│  PreToolUse ──exec──→ scale-bridge.py pre-tool   │
+│  PostToolUse ──exec──→ scale-bridge.py post-tool │
+│  beforeStop  ──exec──→ scale-bridge.py stop      │
+└──────────────────────┬───────────────────────────┘
+                       │ injectContext
+                       ▼
+┌──────────────────────────────────────────────────┐
+│      Self-Cultivation Engine (Python)            │
+│  detectors/ → 8 pluggable behavioral checks     │
+│  hooks/     → auto-generated executable guards  │
+│  fsm/       → 4-state guard-checked state machine │
+│  evidence/  → SHA-256 verification records      │
+└──────────────────────────────────────────────────┘
+```
+
+Two layers are orthogonal:
+- **SCALE** = artifact quality + engineering process
+- **Self-Cultivation** = cognitive bias + behavioral self-discipline
+
 ## Design Principles
 
 1. **Append-only** — Every update is an append. History is evidence.

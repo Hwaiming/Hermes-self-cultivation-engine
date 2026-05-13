@@ -20,6 +20,7 @@ pending-patches/
 .scale/
 .state.json
 *.log
+engine/hooks/generated/
 
 # Secrets
 .env
