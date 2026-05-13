@@ -81,9 +81,21 @@ def main():
         results = registry.run_all(context)
     
     # Run hooks (pre-flight checks from iron-level patterns)
-    from hooks.runner import run_pre_flight, HookRunner
+    from engine.hooks.runner import run_pre_flight, HookRunner
     hook_results = run_pre_flight(context, auto_generate=True, quiet=True)
     hook_summary = HookRunner().summary(hook_results)
+    
+    # Run FSM check
+    from engine.fsm.runner import StateMachine
+    from engine.fsm.states import AgentState
+    fsm = StateMachine()
+    fsm_status = {
+        "state": fsm.current_state.value,
+        "available": [
+            {"to": t["to"], "can_transition": t["can_transition"]}
+            for t in fsm.available_transitions(context)
+        ],
+    }
     
     # Save evidence
     for r in results:

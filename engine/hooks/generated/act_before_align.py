@@ -2,7 +2,7 @@
 """Auto-generated hook: act_before_align
 Severity: block
 Source: pattern: act_before_align
-Generated: 2026-05-13 09:44
+Generated: 2026-05-13 10:02
 
 This hook checks for: Default reaction to "found a problem" is "let me fix it" instead of "let me align first." Decision space not fully scanned before acting.
 """
@@ -67,7 +67,7 @@ if __name__ == "__main__":
         ctx = json.loads(os.environ["HOOK_CONTEXT"])
     
     result = check(ctx)
-    result["generated_at"] = "2026-05-13 09:44"
+    result["generated_at"] = "2026-05-13 10:02"
     print(json.dumps(result, ensure_ascii=False))
     
     if result.get("severity") == "block" and not result.get("passed"):

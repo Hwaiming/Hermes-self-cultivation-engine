@@ -18,6 +18,7 @@ Thumbs.db
 # Engine runtime
 pending-patches/
 .scale/
+.state.json
 *.log
 
 # Secrets
