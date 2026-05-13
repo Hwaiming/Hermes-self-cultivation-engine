@@ -1,4 +1,3 @@
-"""Hermes Memory System — retain, recall, reflect."""
+"""Hermes Memory System — retain, recall, reflect. Pluggable backends."""
 from .core import MemoryEngine
-from .store import MemoryStore
 from .narrative import NarrativeLog
